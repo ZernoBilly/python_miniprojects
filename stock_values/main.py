@@ -3,22 +3,13 @@ from datetime import datetime, timedelta
 from functions import *
 
 DATE_TO = datetime.now()
-DATE_FROM = DATE_TO - timedelta(days=7)
-
-# def get_stock_prices(tickers: list):
-#     d = datetime.now() - timedelta(days=7)
-#     for ticker in tickers:
-#         data = pdr.get_data_yahoo(ticker, d)
-#         close_price = list(data)
-#         yield close_price
+DATE_FROM = DATE_TO - timedelta(days=100)
 
 
-# for prices in get_stock_prices(["AAPL", "TWTR"]):
-#     print(prices)
-
-
-stock_data = get_stock_data("FORTUM.HE")
-
+stock_data = get_stock_data("FORTUM.HE", DATE_FROM)
 stock_data = get_weekdays(stock_data)
+stock_data = get_diff(stock_data)
+weekday_avarage = group_by_weekday(stock_data)
+stock_data = get_avg_weekday(stock_data, weekday_avarage)
 
 print(stock_data)

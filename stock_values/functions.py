@@ -15,3 +15,26 @@ def get_stock_data(tickers: str, date_from=c.DATE_FROM, date_to=c.DATE_TO):
     stock_data = stock_data.reset_index()
     stock_data.drop("Adj Close", inplace=True, axis=1)
     return stock_data
+
+
+def get_diff(data):
+    data["Diff_percent"] = (data["Open"].diff() / data["Open"]) * 100
+    data["Diff_percent"] = data["Diff_percent"].fillna(0)
+    return data
+
+
+def group_by_weekday(data):
+    return data.groupby("Weekday")["Diff_percent"].mean(5)
+
+
+def get_avg_weekday(stock_data, weekday_avarage):
+    avg_weekday = []
+
+    for index, row in stock_data.iterrows():
+        avg_day = weekday_avarage[row["Weekday"]]
+        if row["Diff_percent"] == 0.0:
+            avg_day = 0.000000
+        avg_weekday.append(avg_day)
+
+    stock_data["Avg_weekday"] = avg_weekday
+    return stock_data
