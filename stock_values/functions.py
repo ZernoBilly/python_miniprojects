@@ -38,3 +38,15 @@ def get_avg_weekday(stock_data, weekday_avarage):
 
     stock_data["Avg_weekday"] = avg_weekday
     return stock_data
+
+
+def get_diff_from_max(stock_data):
+    stock_data["Diff_from_max"] = [
+        x for x in stock_data["High"] - stock_data["High"].max()]
+    return stock_data
+
+
+def get_diff_from_min(stock_data):
+    stock_data["Diff_from_min"] = [
+        x for x in stock_data["Low"] - stock_data["Low"].min()]
+    return stock_data
