@@ -50,3 +50,16 @@ def get_diff_from_min(stock_data):
     stock_data["Diff_from_min"] = [
         x for x in stock_data["Low"] - stock_data["Low"].min()]
     return stock_data
+
+
+def get_diff_percent_from_avg(stock_data):
+    avg = (stock_data["High"].mean() + stock_data["Low"].mean()) / 2
+    values = []
+
+    for i, row in stock_data.iterrows():
+        day_avg = (row["High"] + row["Low"]) / 2
+        dif_from_avg = day_avg - avg
+        values.append(dif_from_avg)
+
+    stock_data["Diff_percent_from_avg"] = values
+    return stock_data
